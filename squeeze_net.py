@@ -100,7 +100,7 @@ class SqueezeNet(nutszebra_chainer.Model):
         h = self.fire8(h, train=train)
         h = F.max_pooling_2d(h, ksize=(3, 3), stride=(2, 2), pad=(1, 1))
         h = self.fire9(h, train=train) + h
-        h = self.bn_relu_conv_10(h, train=train)
+        h = self.bn_relu_conv10(h, train=train)
         num, categories, y, x = h.data.shape
         # global average pooling
         h = F.reshape(F.average_pooling_2d(h, (y, x)), (num, categories))

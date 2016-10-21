@@ -79,6 +79,20 @@ class SqueezeNet(nutszebra_chainer.Model):
         self.modules = modules
         self.name = 'squeeze_res_net'
 
+    def count_parameters(self):
+        count = 0
+        count += functools.reduce(lambda a, b: a * b, self.conv1.W.data.shape)
+        count += self.fire2.count_parameters()
+        count += self.fire3.count_parameters()
+        count += self.fire4.count_parameters()
+        count += self.fire5.count_parameters()
+        count += self.fire6.count_parameters()
+        count += self.fire7.count_parameters()
+        count += self.fire8.count_parameters()
+        count += self.fire9.count_parameters()
+        count += self.bn_relu_conv10.count_parameters()
+        return count
+
     def weight_initialization(self):
         self.conv1.W.data = self.weight_relu_initialization(self.conv1)
         self.conv1.b.data = self.bias_initialization(self.conv1, constant=0)

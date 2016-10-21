@@ -85,7 +85,7 @@ class SqueezeNet(nutszebra_chainer.Model):
         # *****fire modules*****
         for i in six.moves.range(2, 10):
             self['fire{}'.format(i)].weight_initialization()
-        self.bn_relu_conv_10.weight_initialization()
+        self.bn_relu_conv10.weight_initialization()
 
     def __call__(self, x, train=True):
         h = self.conv1(x)

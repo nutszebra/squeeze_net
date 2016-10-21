@@ -1,3 +1,5 @@
+import sys
+sys.path.append('./trainer')
 import nutszebra_cifar10
 import nutszebra_optimizer
 import squeeze_net

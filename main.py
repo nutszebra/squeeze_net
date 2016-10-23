@@ -4,7 +4,7 @@ import nutszebra_cifar10
 import nutszebra_optimizer
 import squeeze_net
 import argparse
-import trainer.nutszebra_data_augmentaon as da
+import trainer.nutszebra_data_augmentation as da
 
 if __name__ == '__main__':
 

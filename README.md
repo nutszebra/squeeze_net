@@ -11,12 +11,12 @@ Implementation of SqueezeNet by chainer
     python main.py -p ./ -e 300 -b 64 -g 0 -s 1 -trb 1 -teb 1 -lr 0.1
 
 # Details about my implementation
-My squeezenet is with simple bypass and most network parameters are same as [[1]][Paper].
-However, the implementation slightly differs from orinal implemenatation [[1]][Paper].
+My squeezenet is with simple bypass and most network parameters are same as in [[1]][Paper].
+However, the implementation slightly differs from the orinal implemenatation [[1]][Paper].
 * Fire module  
-As [[2]][Paper2] is reported, the order of BN_ReLU_Conv works well for residual networks, thus Fire module is composed of three BN_ReLU_Conv layer. 
+As [[2]][Paper2] is reported, the order of BN_ReLU_Conv works well for residual networks, thus Fire module is composed of three BN_ReLU_Conv layers. 
 * Optimization  
-The way of optimization and hyperparameters are same as [[3]][Paper3].
+The way of optimization and hyperparameters are same as in [[3]][Paper3].
 
 # References
 SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and <0.5MB model size [[1]][Paper]  

@@ -4,6 +4,7 @@ import nutszebra_cifar10
 import nutszebra_optimizer
 import squeeze_net
 import argparse
+import trainer.nutszebra_data_augmentaon as da
 
 if __name__ == '__main__':
 
@@ -51,5 +52,6 @@ if __name__ == '__main__':
     optimizer = nutszebra_optimizer.OptimizerDense(model, lr=lr)
     args['model'] = model
     args['optimizer'] = optimizer
+    args['da'] = da.DataAugmentationCifar10NormalizeBig
     main = nutszebra_cifar10.TrainCifar10(**args)
     main.run()

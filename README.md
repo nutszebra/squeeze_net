@@ -17,7 +17,7 @@ However, the implementation slightly differs from the original implemenatation [
 As [[2]][Paper2] is reported, the order of BN_ReLU_Conv works well for residual networks, thus Fire module is composed of three BN_ReLU_Conv layers. 
 * Optimization  
 Optimization and hyperparameters are same as in [[3]][Paper3].
-* Data augmentation
+* Data augmentation  
 Pictures are randomly resized in the range of [124, 132], then 122x122 patches are extracted randomly.
 Horizontal flipping is applied with 0.5 probability.  
 

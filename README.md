@@ -21,6 +21,8 @@ Optimization and hyperparameters are same as in [[3]][Paper3].
 Pictures are randomly resized in the range of [124, 132], then 122x122 patches are extracted randomly.
 Horizontal flipping is applied with 0.5 probability.  
 
+# Result
+
 | network                 | total accuracy (%) |
 |:------------------------|-------------------:|
 | Alexnet [[4]][url1]     | 92.45              |

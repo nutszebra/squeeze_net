@@ -21,11 +21,18 @@ Optimization and hyperparameters are same as in [[3]][Paper3].
 Pictures are randomly resized in the range of [124, 132], then 122x122 patches are extracted randomly.
 Horizontal flipping is applied with 0.5 probability.  
 
+| network                 | total accuracy (%) |
+|:------------------------|-------------------:|
+| Alexnet [[4]][url1]     | 92.45              |
+| Squeezenet [[1]][Paper] | soon               |
+
 # References
 SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and <0.5MB model size [[1]][Paper]  
 Identity Mappings in Deep Residual Networks [[2]][Paper2]  
 Densely Connected Convolutional Networks [[3]][Paper3]  
+Alexnet implementation by torch [[4]][url1]
 
 [paper]: https://arxiv.org/abs/1602.07360 "Paper"
 [paper2]: https://arxiv.org/abs/1603.05027 "Paper2"
 [paper3]: https://arxiv.org/abs/1608.06993 "Paper3"
+[url1]: http://torch.ch/blog/2015/07/30/cifar.html "url1"

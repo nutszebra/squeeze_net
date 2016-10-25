@@ -18,7 +18,7 @@ As [[2]][Paper2] is reported, the order of BN_ReLU_Conv works well for residual 
 * Optimization  
 Optimization and hyperparameters are same as in [[3]][Paper3].
 * Data augmentation  
-Pictures are randomly resized in the range of [124, 132], then 122x122 patches are extracted randomly.
+Pictures are randomly resized in the range of [124, 132], then 122x122 patches are extracted randomly and are normalized locally.
 Horizontal flipping is applied with 0.5 probability.  
 
 # Result

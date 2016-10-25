@@ -26,7 +26,10 @@ Test: Pictures are randomly resized to 128x128, then they are normalized locally
 | network                 | total accuracy (%) |
 |:------------------------|-------------------:|
 | Alexnet [[4]][url1]     | 92.45              |
-| Squeezenet [[1]][Paper] | soon               |
+| Squeezenet [[1]][Paper] | 92.63               |
+
+<img src="https://github.com/nutszebra/squeeze_net/blob/master/img/loss.jpg" alt="loss" title="loss">
+<img src="https://github.com/nutszebra/squeeze_net/blob/master/img/accuracy.jpg" alt="total accuracy" title="total accuracy">
 
 # References
 SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and <0.5MB model size [[1]][Paper]  

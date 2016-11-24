@@ -19,7 +19,7 @@ As [[2]][Paper2] is reported, the order of BN_ReLU_Conv works well for residual 
 * Optimization  
 Optimization and hyperparameters are same as in [[3]][Paper3].
 * Data augmentation  
-Train: Pictures are randomly resized in the range of [124, 132], then 122x122 patches are extracted randomly and are normalized locally. Horizontal flipping is applied with 0.5 probability.  
+Train: Pictures are resized in the range of [124, 132], then 122x122 patches are extracted randomly and are normalized locally. Horizontal flipping is applied with 0.5 probability.  
 Test: Pictures are randomly resized to 128x128, then they are normalized locally. Single image test is used to calculate total accuracy.  
 
 

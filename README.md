@@ -5,7 +5,8 @@ Implementation of SqueezeNet by chainer
 
     git clone https://github.com/nutszebra/squeeze_net.git
     cd squeeze_net
-    git clone https://github.com/nutszebra/trainer.git
+    git submodule init
+    git submodule update
 
 # How to run
     python main.py -p ./ -e 300 -b 64 -g 0 -s 1 -trb 1 -teb 1 -lr 0.1

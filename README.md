@@ -24,10 +24,10 @@ Test: Pictures are randomly resized to 128x128, then they are normalized locally
 
 
 # Cifar10 result
-| network                 | total accuracy (%) |
-|:------------------------|-------------------:|
-| Alexnet [[4]][url1]     | 92.45              |
-| Squeezenet [[1]][Paper] | 92.63               |
+| network                                          | total accuracy (%) |
+|:-------------------------------------------------|-------------------:|
+| Alexnet without data augmentation[[4]][url1]     | 82                 |
+| Squeezenet [[1]][Paper]                          | 92.63              |
 
 <img src="https://github.com/nutszebra/squeeze_net/blob/master/img/loss.jpg" alt="loss" title="loss">
 <img src="https://github.com/nutszebra/squeeze_net/blob/master/img/accuracy.jpg" alt="total accuracy" title="total accuracy">
@@ -36,9 +36,9 @@ Test: Pictures are randomly resized to 128x128, then they are normalized locally
 SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and <0.5MB model size [[1]][Paper]  
 Identity Mappings in Deep Residual Networks [[2]][Paper2]  
 Densely Connected Convolutional Networks [[3]][Paper3]  
-Alexnet implementation by torch [[4]][url1]
+Alexnet without data augmentation [[4]][url1]
 
 [paper]: https://arxiv.org/abs/1602.07360 "Paper"
 [paper2]: https://arxiv.org/abs/1603.05027 "Paper2"
 [paper3]: https://arxiv.org/abs/1608.06993 "Paper3"
-[url1]: http://torch.ch/blog/2015/07/30/cifar.html "url1"
+[url1]: https://singa.apache.org/en/docs/examples/cifar10/README.html "url1"

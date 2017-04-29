@@ -16,6 +16,25 @@ class Optimizer(object):
         self.optimizer.update()
 
 
+class OptimizerGooglenetV3(Optimizer):
+
+    def __init__(self, model=None, lr=0.045, decay=0.9, weight_decay=1.0e-6, clip=2.0):
+        super(OptimizerGooglenetV3, self).__init__(model)
+        optimizer = optimizers.RMSprop(lr, decay)
+        weight_decay = chainer.optimizer.WeightDecay(weight_decay)
+        clip = chainer.optimizer.GradientClipping(clip)
+        optimizer.setup(self.model)
+        optimizer.add_hook(weight_decay)
+        optimizer.add_hook(clip)
+        self.optimizer = optimizer
+
+    def __call__(self, i):
+        if i % 2 == 0:
+            lr = self.optimizer.lr * 0.94
+            print('lr is changed: {} -> {}'.format(self.optimizer.lr, lr))
+            self.optimizer.lr = lr
+
+
 class OptimizerDense(Optimizer):
 
     def __init__(self, model=None, schedule=(150, 225), lr=0.1, momentum=0.9, weight_decay=1.0e-4):

@@ -47,6 +47,7 @@ if __name__ == '__main__':
                         help='leraning rate')
 
     args = parser.parse_args().__dict__
+    print(args)
     lr = args.pop('lr')
 
     print('generating model')

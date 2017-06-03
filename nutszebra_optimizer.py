@@ -18,7 +18,7 @@ class Optimizer(object):
 
 class OptimizerDense(Optimizer):
 
-    def __init__(self, model=None, schedule=(150, 225), lr=0.1, momentum=0.9, weight_decay=1.0e-4):
+    def __init__(self, model=None, schedule=(150, 225), lr=0.1, momentum=0.9, weight_decay=1.0e-3):
         super(OptimizerDense, self).__init__(model)
         optimizer = optimizers.MomentumSGD(lr, momentum)
         weight_decay = chainer.optimizer.WeightDecay(weight_decay)

@@ -1,6 +1,7 @@
 import chainer
 from chainer import optimizers
 import nutszebra_basic_print
+from nutszebra_utility import Utility as utility
 
 
 class Optimizer(object):
@@ -16,42 +17,33 @@ class Optimizer(object):
         self.optimizer.update()
 
 
-class OptimizerGooglenetV3(Optimizer):
+class ILSVRC(Optimizer):
 
-    def __init__(self, model=None, lr=0.045, weight_decay=1.0e-6, clip=2.0):
-        super(OptimizerGooglenetV3, self).__init__(model)
-        # optimizer = optimizers.RMSprop(lr)
-        optimizer = optimizers.MomentumSGD(lr, 0.9)
-        weight_decay = chainer.optimizer.WeightDecay(weight_decay)
-        clip = chainer.optimizer.GradientClipping(clip)
-        optimizer.setup(self.model)
-        optimizer.add_hook(weight_decay)
-        optimizer.add_hook(clip)
-        self.optimizer = optimizer
-
-    def __call__(self, i):
-        if i % 2 == 0:
-            lr = self.optimizer.lr * 0.94
-            print('lr is changed: {} -> {}'.format(self.optimizer.lr, lr))
-            self.optimizer.lr = lr
-
-
-class OptimizerDense(Optimizer):
-
-    def __init__(self, model=None, schedule=(150, 225), lr=0.1, momentum=0.9, weight_decay=1.0e-4):
-        super(OptimizerDense, self).__init__(model)
+    def __init__(self, model=None, lr_file='./lr.txt', momentum=0.9, weight_decay=1.0e-4):
+        super(ILSVRC, self).__init__(model)
+        lr = self.load_lr(lr_file)
+        print('initial lr: {}'.format(lr))
         optimizer = optimizers.MomentumSGD(lr, momentum)
-        weight_decay = chainer.optimizer.WeightDecay(weight_decay)
+        wd = chainer.optimizer.WeightDecay(weight_decay)
         optimizer.setup(self.model)
-        optimizer.add_hook(weight_decay)
+        optimizer.add_hook(wd)
         self.optimizer = optimizer
-        self.schedule = schedule
-        self.lr = lr
-        self.momentum = momentum
-        self.weight_decay = weight_decay
+        self.lr_file = lr_file
+        self.count = 0
 
     def __call__(self, i):
-        if i in self.schedule:
-            lr = self.optimizer.lr / 10
-            print('lr is changed: {} -> {}'.format(self.optimizer.lr, lr))
-            self.optimizer.lr = lr
+        pass
+
+    def update(self):
+        self.optimizer.update()
+        # check lr
+        self.count += 1
+        if self.count >= 10:
+            self.count = 0
+            lr = self.load_lr(self.lr_file)
+            if not self.optimizer.lr == lr:
+                print('lr is changed: {} -> {}'.format(self.optimizer.lr, lr))
+                self.optimizer.lr = lr
+
+    def load_lr(self, path):
+        return float(utility.load_text(path)[0])

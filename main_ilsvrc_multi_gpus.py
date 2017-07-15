@@ -1,8 +1,8 @@
 import sys
 import argparse
+sys.path.append('./trainer')
 import data_augmentation as da
 import squeeze_net
-sys.path.append('./trainer')
 import nutszebra_ilsvrc_object_localization_with_multi_gpus
 from nutszebra_optimizer import ILSVRC as ilsvrc
 

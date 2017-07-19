@@ -4,7 +4,8 @@ import argparse
 import squeeze_net
 import data_augmentation as da
 import nutszebra_ilsvrc_object_localization_with_multi_gpus
-from nutszebra_optimizer import ILSVRC as ilsvrc
+from nutszebra_optimizer import OptimizerCosineAnnealing as ilsvrc
+
 
 if __name__ == '__main__':
 
@@ -25,7 +26,7 @@ if __name__ == '__main__':
                         default='./',
                         help='model and optimizer will be saved at every epoch')
     parser.add_argument('--epoch', '-e', type=int,
-                        default=100,
+                        default=200,
                         help='maximum epoch')
     parser.add_argument('--batch', '-b', type=int,
                         default=32,
@@ -34,7 +35,7 @@ if __name__ == '__main__':
                         default=-1,
                         help='multiple gpu ids')
     parser.add_argument('--start_epoch', '-s', type=int,
-                        default=1,
+                        default=0,
                         help='start from this epoch')
     parser.add_argument('--train_batch_divide', '-trb', type=int,
                         default=1,
@@ -62,7 +63,7 @@ if __name__ == '__main__':
     print('Done')
     print('Parameters: {}'.format(model.count_parameters()))
     args['model'] = model
-    args['optimizer'] = ilsvrc(model=model)
+    args['optimizer'] = ilsvrc(model=model, total_epoch=args['epoch'], start_epoch=['start_epoch'])
     args['da'] = da.DataAugmentationNormalizeBigger
     main = nutszebra_ilsvrc_object_localization_with_multi_gpus.TrainIlsvrcObjectLocalizationClassificationWithMultiGpus(**args)
     main.run()

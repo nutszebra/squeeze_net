@@ -2,6 +2,7 @@ import chainer
 from chainer import optimizers
 import nutszebra_basic_print
 from nutszebra_utility import Utility as utility
+import numpy as np
 
 
 class Optimizer(object):
@@ -47,3 +48,28 @@ class ILSVRC(Optimizer):
 
     def load_lr(self, path):
         return float(utility.load_text(path)[0])
+
+
+class OptimizerCosineAnnealing(Optimizer):
+
+    def __init__(self, model=None, eta_max=0.1, eta_min=0.1 * 10 ** -3, total_epoch=200, momentum=0.9, weight_decay=1.0e-4, start_epoch=0):
+        super(OptimizerCosineAnnealing, self).__init__(model)
+        self.eta_max = eta_max
+        self.eta_min = eta_min
+        self.total_epoch = total_epoch
+        lr = self.calc_lr(start_epoch)
+        print('initial learing rate: {}'.format(lr))
+        optimizer = optimizers.MomentumSGD(lr, momentum)
+        weight_decay = chainer.optimizer.WeightDecay(weight_decay)
+        optimizer.setup(self.model)
+        optimizer.add_hook(weight_decay)
+        self.optimizer = optimizer
+
+    def calc_lr(self, i):
+        return self.eta_min + 0.5 * (self.eta_max - self.eta_min) * (1 + np.cos(np.pi * float(i) / self.total_epoch))
+
+    def __call__(self, i):
+        new_lr = self.calc_lr(i)
+        old_lr = self.optimizer.lr
+        print('lr is changed: {} -> {}'.format(old_lr, new_lr))
+        self.optimizer.lr = new_lr

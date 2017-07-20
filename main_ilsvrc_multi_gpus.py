@@ -63,7 +63,7 @@ if __name__ == '__main__':
     print('Done')
     print('Parameters: {}'.format(model.count_parameters()))
     args['model'] = model
-    args['optimizer'] = ilsvrc(model=model, total_epoch=args['epoch'], start_epoch=['start_epoch'])
+    args['optimizer'] = ilsvrc(model=model, total_epoch=args['epoch'], start_epoch=args['start_epoch'])
     args['da'] = da.DataAugmentationNormalizeBigger
     main = nutszebra_ilsvrc_object_localization_with_multi_gpus.TrainIlsvrcObjectLocalizationClassificationWithMultiGpus(**args)
     main.run()

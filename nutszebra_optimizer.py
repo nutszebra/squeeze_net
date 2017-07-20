@@ -57,7 +57,7 @@ class OptimizerCosineAnnealing(Optimizer):
         self.eta_max = eta_max
         self.eta_min = eta_min
         self.total_epoch = total_epoch
-        lr = self.calc_lr(start_epoch)
+        lr = OptimizerCosineAnnealing.calc_lr(eta_min, eta_max, start_epoch, total_epoch)
         print('initial learing rate: {}'.format(lr))
         optimizer = optimizers.MomentumSGD(lr, momentum)
         weight_decay = chainer.optimizer.WeightDecay(weight_decay)
@@ -65,11 +65,12 @@ class OptimizerCosineAnnealing(Optimizer):
         optimizer.add_hook(weight_decay)
         self.optimizer = optimizer
 
-    def calc_lr(self, i):
-        return self.eta_min + 0.5 * (self.eta_max - self.eta_min) * (1 + np.cos(np.pi * float(i) / self.total_epoch))
+    @staticmethod
+    def calc_lr(eta_min, eta_max, i, total_epoch):
+        return eta_min + 0.5 * (eta_max - eta_min) * (1 + np.cos(np.pi * float(i) / total_epoch))
 
     def __call__(self, i):
-        new_lr = self.calc_lr(i)
+        new_lr = OptimizerCosineAnnealing.calc_lr(self.eta_min, self.eta_max, i, self.total_epoch)
         old_lr = self.optimizer.lr
         print('lr is changed: {} -> {}'.format(old_lr, new_lr))
         self.optimizer.lr = new_lr

@@ -1,7 +1,7 @@
 import sys
 sys.path.append('./trainer')
 import argparse
-import squeeze_net
+import squeezenet
 import data_augmentation as da
 import nutszebra_ilsvrc_object_localization_with_multi_gpus
 from nutszebra_optimizer import OptimizerCosineAnnealing as ilsvrc
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     print(args)
 
     print('generating model')
-    model = squeeze_net.SqueezeNet(1000)
+    model = squeezenet.SqueezeNet(1000)
     print('Done')
     print('Parameters: {}'.format(model.count_parameters()))
     args['model'] = model

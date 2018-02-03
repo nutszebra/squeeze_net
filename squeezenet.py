@@ -76,5 +76,5 @@ class Squeeze(chainer.Chain):
         h = F.reshape(F.average_pooling_2d(h, (y, x)), (num, categories))
         return h
 
-    def weight_initialization((self):
+    def weight_initialization(self):
             pass

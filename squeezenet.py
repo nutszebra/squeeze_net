@@ -1,7 +1,11 @@
 # """model definition."""
+import numpy as np
 import chainer
 from chainer import functions as F
 from chainer import links as L
+from chainer import cuda
+from chainer import serializers
+
 
 class BN_Relu_Conv(chainer.Chain):
 
@@ -18,6 +22,7 @@ class BN_Relu_Conv(chainer.Chain):
         h = F.relu(self.bn(x))
         h = self.conv(h)
         return h
+
 
 class FireModule(chainer.Chain):
 
@@ -36,6 +41,7 @@ class FireModule(chainer.Chain):
         h2 = self.conv3(h)
         h_expand = F.concat([h1, h2], axis=1)
         return h_expand
+
 
 class Squeeze(chainer.Chain):
 
@@ -78,3 +84,52 @@ class Squeeze(chainer.Chain):
 
     def weight_initialization(self):
             pass
+
+    def check_gpu(self, gpu):
+        if gpu >= 0:
+            cuda.get_device(gpu).use()
+            self.to_gpu(gpu)
+            return True
+        return False
+
+    @staticmethod
+    def _check_cupy():
+        try:
+            cuda.check_cuda_available()
+            return cuda.cupy
+        # if gpu is not available, RuntimeError arises
+        except RuntimeError:
+            return np
+
+    def prepare_input(self, X, dtype=np.float32, volatile=False, xp=None, gpu=None):
+        if gpu is not None:
+            inp = np.asarray(X, dtype=dtype)
+            inp = chainer.Variable(inp, volatile=volatile)
+            inp.to_gpu(gpu)
+            return inp
+        if xp is None:
+            if self.model_is_cpu_mode():
+                inp = np.asarray(X, dtype=dtype)
+            else:
+                inp = self.nz_xp.asarray(X, dtype=dtype)
+        else:
+            inp = xp.asarray(X, dtype=dtype)
+        return chainer.Variable(inp, volatile=volatile)
+
+    def save_model(self, path='', gpu=0):
+        # if gpu_flag is True, switch the model to gpu mode at last
+        gpu_flag = False
+        # if gpu mode, switch the model to cpu mode temporarily
+        if self.model_is_cpu_mode() is False:
+            self.to_cpu()
+            gpu_flag = True
+        # if path is ''
+        if path == '':
+            path = str(self.save_model_epoch) + '.model'
+        self.nz_save_model_epoch += 1
+        # increment self.nz_save_model_epoch
+        serializers.save_npz(path, self)
+        # if gpu_flag is True, switch the model to gpu mode at last
+        if gpu_flag:
+            self.to_gpu(gpu)
+        return True

@@ -142,3 +142,8 @@ class Squeeze(chainer.Chain):
         if gpu_flag:
             self.to_gpu(gpu)
         return True
+
+    @staticmethod
+    def calc_loss(y, t):
+        loss = F.softmax_cross_entropy(y, t)
+        return loss

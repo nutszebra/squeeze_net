@@ -59,9 +59,8 @@ if __name__ == '__main__':
     print(args)
 
     print('generating model')
-    model = squeezenet.SqueezeNet(1000)
+    model = squeezenet.Squeeze(1000)
     print('Done')
-    print('Parameters: {}'.format(model.count_parameters()))
     args['model'] = model
     args['optimizer'] = ilsvrc(model=model, total_epoch=args['epoch'], start_epoch=args['start_epoch'])
     args['da'] = da.DataAugmentationNormalizeBigger

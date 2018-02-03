@@ -47,6 +47,9 @@ class Squeeze(chainer.Chain):
 
     def __init__(self, category_num=10):
         """Init."""
+        self.nz_save_model_epoch = 0
+        self.nz_save_optimizer_epoch = 0
+        self.nz_xp = self._check_cupy()
         initializer = chainer.initializers.HeNormal()
         super(Squeeze, self).__init__()
         with self.init_scope():
@@ -101,10 +104,16 @@ class Squeeze(chainer.Chain):
         except RuntimeError:
             return np
 
-    def prepare_input(self, X, dtype=np.float32, volatile=False, xp=None, gpu=None):
+    def model_is_cpu_mode(self):
+        if self.xp == np:
+            return True
+        else:
+            return False
+
+    def prepare_input(self, X, dtype=np.float32, xp=None, gpu=None):
         if gpu is not None:
             inp = np.asarray(X, dtype=dtype)
-            inp = chainer.Variable(inp, volatile=volatile)
+            inp = chainer.Variable(inp)
             inp.to_gpu(gpu)
             return inp
         if xp is None:
@@ -114,7 +123,7 @@ class Squeeze(chainer.Chain):
                 inp = self.nz_xp.asarray(X, dtype=dtype)
         else:
             inp = xp.asarray(X, dtype=dtype)
-        return chainer.Variable(inp, volatile=volatile)
+        return chainer.Variable(inp)
 
     def save_model(self, path='', gpu=0):
         # if gpu_flag is True, switch the model to gpu mode at last
